@@ -20,11 +20,13 @@ public class ContactController {
 
     @PostMapping("/saveMsg")
     public String saveMsg(@Valid @ModelAttribute(name = "contact") Contact contact, Errors errors) {
-        if (errors.hasErrors()) {
-            System.out.println(errors.getAllErrors());
-            return "contact.html";
-        }
- System.out.println(contact);
-        return "redirect:contact";
+       throw new RuntimeException("errorrr..");
+//        if (errors.hasErrors()) {
+//            System.out.println(errors.getAllErrors());
+//            return "contact.html";
+//        }
+// System.out.println(contact);
+//
+//        return "redirect:contact";
     }
 }
