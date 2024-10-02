@@ -37,6 +37,7 @@ Author URL: http://w3layouts.com
 <!-- //inner banner -->
 
 <!-- login block -->
+<!-- login block -->
 <section class="w3l-contact py-5" id="contact">
     <div class="container py-md-5 py-4">
         <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
@@ -44,7 +45,7 @@ Author URL: http://w3layouts.com
         </div>
         <div class="row login-block">
             <div class="col-md-6 login-center">
-                <form action="/login" method="post" class="signin-form">
+                <form th:action="@{/login}" method="post" class="signin-form">
                     <div class="col-md-8 login-center input-grids">
                         <li class="alert alert-danger" role="alert" th:if="${!#strings.isEmpty(errorMessge)}"
                             th:text="${errorMessge}" />
@@ -52,6 +53,7 @@ Author URL: http://w3layouts.com
                                class="login-input" />
                         <input type="password" name="password" id="password" placeholder="Password"
                                class="login-input" />
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                     </div>
                     <div class="col-md-8 login-center text-start">
                         <button class="btn btn-style btn-style-3 text-left">Log In</button>
@@ -61,8 +63,7 @@ Author URL: http://w3layouts.com
             </div>
         </div>
     </div>
-</section>
-<!-- //login block -->
+</section><!-- //login block -->
 
 <!-- footer block -->
 <div th:replace="~{footer :: footer}">...</div>
