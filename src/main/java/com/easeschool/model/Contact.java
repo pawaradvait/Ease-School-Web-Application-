@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.Length;
 
 @Data
 @ToString
-public class Contact {
+public class Contact extends BaseEntity {
     @Length(min = 5, max = 20)
   /*
       * @NotNull: Checks if a given field is not null but allows empty values & zero elements inside collections.
@@ -35,4 +35,5 @@ public class Contact {
     @Size(min=10, message="Message must be at least 10 characters long")
     private String message;
 
+    private String status;
 }

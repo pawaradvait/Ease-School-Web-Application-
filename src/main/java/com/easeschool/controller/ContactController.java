@@ -1,7 +1,9 @@
 package com.easeschool.controller;
 
 import com.easeschool.model.Contact;
+import com.easeschool.service.ContactService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ContactController {
+
+    @Autowired
+    private ContactService contactService;
 
     @RequestMapping("/contact")
     public String displayContact(Model model) {
@@ -25,7 +30,7 @@ public class ContactController {
             return "contact.html";
         }
  System.out.println(contact);
-
+         contactService.saveMessage(contact);
         return "redirect:contact";
     }
 }
