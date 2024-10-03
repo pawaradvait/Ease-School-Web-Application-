@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -41,4 +42,12 @@ public class ContactRepo {
  return lc;
    }
 
+   public int  updateMsgStatus(long id,String status,String updatedBy){
+    LocalDateTime updatedDate =LocalDateTime.now();
+
+        String sql = "update  contact_msg set status=? ,updated_by=? ,updated_At=? where contact_id=?";
+ return jdbcTemplate.update(sql, status,updatedBy,updatedDate,id);
+
+
+   }
 }

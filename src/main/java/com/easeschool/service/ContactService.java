@@ -32,4 +32,8 @@ contact.setStatus(AllConstantsOfApplitn.OPEN);
         return contactRepo.findContactmsgWithStus(status);
 
     }
+
+    public int updateMsgStatus(long id,String status,String updatedBy){
+        return contactRepo.updateMsgStatus(id,status,updatedBy);
+    }
 }
