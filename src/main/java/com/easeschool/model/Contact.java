@@ -9,6 +9,9 @@ import org.hibernate.validator.constraints.Length;
 @Data
 @ToString
 public class Contact extends BaseEntity {
+
+    private long contactId;
+
     @Length(min = 5, max = 20)
   /*
       * @NotNull: Checks if a given field is not null but allows empty values & zero elements inside collections.

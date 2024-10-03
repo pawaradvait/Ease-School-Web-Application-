@@ -2,9 +2,15 @@ package com.easeschool.repo;
 
 
 import com.easeschool.model.Contact;
+import com.easeschool.rowMapper.ContactMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Repository;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 public class ContactRepo {
@@ -24,5 +30,15 @@ public class ContactRepo {
 
     }
 
+  public List<Contact> findContactmsgWithStus(String status){
+         String sql = "select * from contact_msg where status=?";
+      List<Contact> lc =  jdbcTemplate.query(sql, new PreparedStatementSetter() {
+             @Override
+             public void setValues(PreparedStatement ps) throws SQLException {
+                 ps.setString(1, status);
+             }
+         },new ContactMapper());
+ return lc;
+   }
 
 }
