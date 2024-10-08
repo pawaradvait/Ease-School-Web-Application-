@@ -3,13 +3,11 @@ package com.easeschool.model;
 import lombok.Data;
 
 @Data
-public class Holiday {
+public class Holiday extends BaseEntity {
 
-    private final String day;
-    private final String reason;
-    private final Type type;
+    private String data;
+    private String reason;
+    private String type;
 
-    public enum Type {
-        FESTIVAL, FEDERAL
-    }
+
 }

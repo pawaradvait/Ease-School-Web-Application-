@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `contact_msg` (
-                                             `contact_id` long AUTO_INCREMENT PRIMARY KEY,
+                                             `contact_id` int AUTO_INCREMENT PRIMARY KEY,
                                              `name` varchar(100) NOT NULL,
                                              `mobile_num` varchar(10) NOT NULL,
                                              `email` varchar(100) NOT NULL,
@@ -10,4 +10,14 @@ CREATE TABLE IF NOT EXISTS `contact_msg` (
                                              `created_by` varchar(50) NOT NULL,
                                              `updated_at` TIMESTAMP DEFAULT NULL,
                                              `updated_by` varchar(50) DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `holidays` (
+                                          `day` varchar(20) NOT NULL,
+                                          `reason` varchar(100) NOT NULL,
+                                          `type` varchar(20) NOT NULL,
+                                          `created_at` TIMESTAMP NOT NULL,
+                                          `created_by` varchar(50) NOT NULL,
+                                          `updated_at` TIMESTAMP DEFAULT NULL,
+                                          `updated_by` varchar(50) DEFAULT NULL
 );
