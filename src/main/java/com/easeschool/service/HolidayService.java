@@ -13,6 +13,7 @@ public class HolidayService {
     @Autowired
     private HolidayRepo holidayRepo;
 
+
     public List<Holiday> getAllHolidays() {
         return holidayRepo.findAll();
     }

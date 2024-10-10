@@ -1,15 +1,21 @@
 package com.easeschool.model;
 
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 
 @Data
 @ToString
+@Entity
+@Table(name="contact_msg")
 public class Contact extends BaseEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long contactId;
 
     @Length(min = 5, max = 20)

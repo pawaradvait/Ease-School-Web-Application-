@@ -1,4 +1,4 @@
-INSERT INTO `holidays` (`day`,`reason`,`type`,`created_at`, `created_by`)
+INSERT INTO `holidays`  (`day`,`reason`,`type`,`created_at`, `created_by`)
 VALUES (' Jan 1 ','New Year''s Day','FESTIVAL',CURDATE(),'DBA');
 
 INSERT INTO `holidays` (`day`,`reason`,`type`,`created_at`, `created_by`)

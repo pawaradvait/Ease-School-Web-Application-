@@ -49,8 +49,10 @@ public class ContactController {
     @GetMapping("/closeMsg")
     public String updateMsgStatus(Model model, @RequestParam int id, Authentication authentication) {
 
-   contactRepo.updateMsgStatus(id,AllConstantsOfApplitn.CLOSE,authentication.getName());
+           contactService.updateMsgStatus(id,AllConstantsOfApplitn.CLOSE,authentication.getName());
+
          return "redirect:displayMessages";
+
 
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ContactService {
@@ -20,8 +21,8 @@ public class ContactService {
 contact.setCreatedAt(LocalDateTime.now());
 contact.setCreatedBy(AllConstantsOfApplitn.ANONYMOUS);
 contact.setStatus(AllConstantsOfApplitn.OPEN);
-          int saved = contactRepo.saveContactMsg(contact);
-          if(saved > 1){
+          Contact saved = contactRepo.save(contact);
+          if(saved != null){
 
               isSave = true;
           }
@@ -29,11 +30,21 @@ contact.setStatus(AllConstantsOfApplitn.OPEN);
     }
 
     public List<Contact> foundContact_msgWithStatus(String status){
-        return contactRepo.findContactmsgWithStus(status);
+        return contactRepo.findByStatus(status);
 
     }
 
     public int updateMsgStatus(long id,String status,String updatedBy){
-        return contactRepo.updateMsgStatus(id,status,updatedBy);
+        Optional<Contact> contact = contactRepo.findById(id);
+       if(contact.isPresent()){
+           contact.get().setStatus(status);
+           contact.get().setUpdatedAt(LocalDateTime.now());
+           contact.get().setUpdatedBy(updatedBy);
+       }
+        Contact c1 = contactRepo.save(contact.get());
+        if(c1 != null){
+            return 1;
+        }
+        return 0;
     }
 }

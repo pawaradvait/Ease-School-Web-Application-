@@ -18,8 +18,6 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
-       http.csrf().ignoringRequestMatchers(PathRequest.toH2Console());
-
 
 
 
@@ -38,7 +36,6 @@ public class SecurityConfig {
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/assets/**").permitAll()
                 .requestMatchers("/logout").permitAll()
-                .requestMatchers(PathRequest.toH2Console()).permitAll()
         );
 
         http.formLogin().loginPage("/login").defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll();
@@ -47,7 +44,7 @@ public class SecurityConfig {
                         .permitAll()).httpBasic(Customizer.withDefaults());
 
 
-        http.headers().frameOptions().sameOrigin(); // Enable H2 Console in iframes
+
 
         return http.build();
     }

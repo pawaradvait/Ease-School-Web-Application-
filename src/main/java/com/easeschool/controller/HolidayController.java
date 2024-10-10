@@ -36,6 +36,7 @@ public class HolidayController {
 //        Holiday.Type[] types=Holiday.Type.values();
 
         List<Holiday> holidays = holidayService.getAllHolidays();
+        System.out.println(holidays);
         Set<String> tester = holidays.stream().map((holiday)-> holiday.getType()).distinct().collect(Collectors.toSet());
         List<Holiday> festivals =holidays.stream().filter((holiday) -> holiday.getType().equals("FESTIVAL")).collect(Collectors.toList());
         List<Holiday> federals = holidays.stream().filter((holiday) -> holiday.getType().equals("FEDERAL")).collect(Collectors.toList());
