@@ -18,8 +18,7 @@ public class ContactService {
 
     public boolean saveMessage(Contact contact){
         boolean isSave = false;
-contact.setCreatedAt(LocalDateTime.now());
-contact.setCreatedBy(AllConstantsOfApplitn.ANONYMOUS);
+
 contact.setStatus(AllConstantsOfApplitn.OPEN);
           Contact saved = contactRepo.save(contact);
           if(saved != null){
@@ -38,8 +37,7 @@ contact.setStatus(AllConstantsOfApplitn.OPEN);
         Optional<Contact> contact = contactRepo.findById(id);
        if(contact.isPresent()){
            contact.get().setStatus(status);
-           contact.get().setUpdatedAt(LocalDateTime.now());
-           contact.get().setUpdatedBy(updatedBy);
+
        }
         Contact c1 = contactRepo.save(contact.get());
         if(c1 != null){
