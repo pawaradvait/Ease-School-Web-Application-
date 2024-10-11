@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -22,6 +23,9 @@ public class EaseSchoolAuthenticationProvider implements AuthenticationProvider 
     @Autowired
     private PersonRepo personRepo;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
@@ -29,7 +33,7 @@ public class EaseSchoolAuthenticationProvider implements AuthenticationProvider 
         String password = authentication.getCredentials().toString();
      Person person =    personRepo.findByEmail(username);
      if(person != null) {
-         if(password.equals(person.getPwd())){
+         if(passwordEncoder.matches(password , person.getPwd())){
              return new UsernamePasswordAuthenticationToken(person.getName() , null,getGrantedAuth(person.getRole()));
          }else{
              return null;
