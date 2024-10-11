@@ -1,7 +1,9 @@
 package com.easeschool.controller;
 
 import com.easeschool.model.Person;
+import com.easeschool.service.PersonService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("public")
 public class PublicController {
 
+    @Autowired
+    private PersonService personService;
 
     @GetMapping("/register")
     public String register(Model model) {
@@ -27,6 +31,8 @@ public class PublicController {
             System.out.println(errors.getAllErrors());
             return "register.html";
         }
-        return "redirect:/login";
+        personService.savePerson(person);
+
+        return "redirect:/login?register=true";
     }
 }
