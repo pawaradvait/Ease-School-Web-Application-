@@ -27,6 +27,7 @@ if(field1Name.equals("pwd")){
 
          if(value1 !=null){
              if( counter == 2 && value1.toString().startsWith("$2a")){
+                 counter = 0;
                  return true;
              }else{
                  return value1.equals(value2);
