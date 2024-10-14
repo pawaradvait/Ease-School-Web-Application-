@@ -20,6 +20,8 @@ public class ProfileController {
 
     @Autowired
     private PersonRepo personRepo;
+    @Autowired
+    private AddressRepo addressRepo;
 
 
     @GetMapping("/displayProfile")
@@ -78,10 +80,10 @@ public class ProfileController {
          address.setAddress2(profile.getAddress2());
          address.setZipCode(profile.getZipCode());
           System.out.println(address);
+      Address    savedaddress = addressRepo.save(address);
 
 
-
-         person.setAddress(address);
+         person.setAddress(savedaddress);
 System.out.println(person);
          personRepo.save(person);
          session.setAttribute("person", person);

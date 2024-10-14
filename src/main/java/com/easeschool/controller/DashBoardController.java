@@ -8,13 +8,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class DashBoardController {
     @Autowired
     private PersonRepo personRepo;
 
-    @GetMapping("/dashboard")
+    @RequestMapping(value = "/dashboard" , method = {RequestMethod.GET, RequestMethod.POST})
     public String dashBoard(Model model, Authentication auth , HttpSession session) {
 
           String username =auth.getName();
