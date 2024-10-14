@@ -34,7 +34,7 @@ public class EaseSchoolAuthenticationProvider implements AuthenticationProvider 
      Person person =    personRepo.findByEmail(username);
      if(person != null) {
          if(passwordEncoder.matches(password , person.getPwd())){
-             return new UsernamePasswordAuthenticationToken(person.getName() , null,getGrantedAuth(person.getRole()));
+             return new UsernamePasswordAuthenticationToken(username , null,getGrantedAuth(person.getRole()));
          }else{
              return null;
          }

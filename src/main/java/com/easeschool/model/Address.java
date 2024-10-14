@@ -15,7 +15,7 @@ import lombok.Data;
 public class Address extends BaseEntity{
 
     @Id
-@GeneratedValue(strategy = GenerationType.AUTO)
+   @GeneratedValue(strategy = GenerationType.AUTO)
     private int addressId;
 
     @NotBlank(message="Address1 must not be blank")
