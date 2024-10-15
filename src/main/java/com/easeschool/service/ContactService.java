@@ -4,6 +4,8 @@ import com.easeschool.constant.AllConstantsOfApplitn;
 import com.easeschool.model.Contact;
 import com.easeschool.repo.ContactRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -30,6 +32,10 @@ contact.setStatus(AllConstantsOfApplitn.OPEN);
 
     public List<Contact> foundContact_msgWithStatus(String status){
         return contactRepo.findByStatus(status);
+
+    }
+    public Page<Contact> foundContact_msgWithStatus(String status, Pageable pageable){
+        return contactRepo.findByStatus(status,pageable);
 
     }
 

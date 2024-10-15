@@ -6,6 +6,11 @@ import com.easeschool.repo.ContactRepo;
 import com.easeschool.service.ContactService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,10 +44,23 @@ public class ContactController {
         return "redirect:contact";
     }
 
-    @GetMapping("/displayMessages")
-    public String displayMessages(Model model) {
-        List<Contact> lc = contactService.foundContact_msgWithStatus(AllConstantsOfApplitn.OPEN);
-        model.addAttribute("contactMsgs", lc);
+    @GetMapping("/displayMessages/page/{pagenos}")
+    public String displayMessages(Model model , @PathVariable int pagenos,
+                                   @RequestParam(value = "sortField") String fieldName,
+                                  @RequestParam(value = "sortDir") String sortDirec
+
+                                  ) {
+//        List<Contact> lc = contactService.foundContact_msgWithStatus(AllConstantsOfApplitn.OPEN);
+
+        Pageable pageable = PageRequest.of(pagenos -1  , 5, sortDirec.equals("asc")?Sort.by(fieldName):Sort.by(fieldName).descending());
+        Page<Contact> contact_mesg = contactService.foundContact_msgWithStatus(AllConstantsOfApplitn.OPEN , pageable);
+
+         model.addAttribute("contactMsgs", contact_mesg);
+         model.addAttribute("currentPage", pagenos);
+         model.addAttribute("reverseSortDir" , sortDirec.equals("asc")?"desc":"asc");
+     model.addAttribute("totalPages", contact_mesg.getTotalPages());
+      model.addAttribute("sortField" , "name");
+      model.addAttribute("sortDir" , "asc");
         return "message.html";
     }
 
@@ -51,7 +69,7 @@ public class ContactController {
 
            contactService.updateMsgStatus(id,AllConstantsOfApplitn.CLOSE,authentication.getName());
 
-         return "redirect:displayMessages";
+         return "redirect:/displayMessages/page/1?sortField=name&sortDir=asc";
 
 
     }

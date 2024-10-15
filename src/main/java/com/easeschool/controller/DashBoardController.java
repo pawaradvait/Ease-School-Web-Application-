@@ -26,6 +26,10 @@ public class DashBoardController {
 
 
         session.setAttribute("person", person);
+
+        if(person.getEaseClass() !=null){
+            model.addAttribute("enrolledClass", person.getEaseClass().getName());
+        }
       model.addAttribute("username", person.getName());
       model.addAttribute("roles", auth.getAuthorities());
         return "dashboard.html";

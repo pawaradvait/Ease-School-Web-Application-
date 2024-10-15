@@ -21,7 +21,7 @@ public class Courses extends BaseEntity{
 
     private String fees;
 
-    @ManyToMany(mappedBy = "courses" , fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "courses" , fetch = FetchType.LAZY ,cascade = CascadeType.PERSIST)
     Set<Person> persons = new HashSet<Person>();
 
 }

@@ -79,7 +79,7 @@ public class Person extends BaseEntity {
     @JoinColumn(name = "class_id" ,referencedColumnName = "classId" , nullable = true)
     private Classes easeClass;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "person_courses",
             joinColumns = {

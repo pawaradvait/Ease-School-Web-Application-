@@ -144,7 +144,14 @@ if(error !=null){
     public String deleteCourse( @RequestParam(value = "id") int courseId) {
         Optional<Courses> course = coursesRepo.findById(courseId);
         if(course.isPresent()) {
-            coursesRepo.delete(course.get());
+
+            for(Person person : course.get().getPersons()){
+                person.getCourses().remove(course.get());
+                personRepo.save(person);
+            }
+
+              coursesRepo.delete(course.get());
+
         }
         return "redirect:/admin/displayCourses";
     }
@@ -182,5 +189,19 @@ if(error !=null){
             personRepo.save(person1);
          return "redirect:/admin/viewStudents?id="+course.getCourseId();
         }
+   }
+
+   @GetMapping("/deleteStudentFromCourse")
+    public String deleteStudentFromCourse(HttpSession session , @RequestParam(value = "personId") int personId) {
+
+       Courses course = (Courses)session.getAttribute("course");
+        Optional<Person> person = personRepo.findById(personId);
+        //best practise to clear data from both side instead of owing side person
+       course.getPersons().remove(person.get());
+       coursesRepo.save(course) ;
+       person.get().getCourses().remove(course);
+       personRepo.save(person.get());
+        return "redirect:/admin/viewStudents?id="+course.getCourseId();
+
    }
 }
