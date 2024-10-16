@@ -1,5 +1,6 @@
 package com.easeschool.controller;
 
+import com.easeschool.config.EaseSchoolProps;
 import com.easeschool.constant.AllConstantsOfApplitn;
 import com.easeschool.model.Contact;
 import com.easeschool.repo.ContactRepo;
@@ -7,6 +8,7 @@ import com.easeschool.service.ContactService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +28,12 @@ public class ContactController {
     private ContactService contactService;
     @Autowired
     private ContactRepo contactRepo;
+
+//    @Autowired
+//    private Environment environment ;
+
+    @Autowired
+    private EaseSchoolProps easeSchoolProps;
 
     @RequestMapping("/contact")
     public String displayContact(Model model) {
@@ -52,7 +60,10 @@ public class ContactController {
                                   ) {
 //        List<Contact> lc = contactService.foundContact_msgWithStatus(AllConstantsOfApplitn.OPEN);
 
-        Pageable pageable = PageRequest.of(pagenos -1  , 5, sortDirec.equals("asc")?Sort.by(fieldName):Sort.by(fieldName).descending());
+
+ int pageSize = easeSchoolProps.getPagesize();
+
+        Pageable pageable = PageRequest.of(pagenos -1  ,pageSize, sortDirec.equals("asc")?Sort.by(fieldName):Sort.by(fieldName).descending());
         Page<Contact> contact_mesg = contactService.foundContact_msgWithStatus(AllConstantsOfApplitn.OPEN , pageable);
 
          model.addAttribute("contactMsgs", contact_mesg);

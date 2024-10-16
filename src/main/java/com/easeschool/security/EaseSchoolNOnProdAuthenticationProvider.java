@@ -3,47 +3,37 @@ package com.easeschool.security;
 import com.easeschool.model.Person;
 import com.easeschool.model.Roles;
 import com.easeschool.repo.PersonRepo;
-import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@Profile("prod")
-public class EaseSchoolAuthenticationProvider implements AuthenticationProvider {
+@Profile("!prod")
+public class EaseSchoolNOnProdAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private PersonRepo personRepo;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
         String username = authentication.getName();
-        String password = authentication.getCredentials().toString();
-     Person person =    personRepo.findByEmail(username);
-     if(person != null) {
-         if(passwordEncoder.matches(password , person.getPwd())){
-             return new UsernamePasswordAuthenticationToken(username , null,getGrantedAuth(person.getRole()));
+        Person person = personRepo.findByEmail(username);
+         if(person == null){
+             throw new BadCredentialsException("Invalid username or password");
          }else{
-             return null;
+             return new UsernamePasswordAuthenticationToken(username,null , getGrantedAuthorities(person.getRole()));
          }
-     }else {
-         return null;
-     }
-
     }
 
     @Override
@@ -51,9 +41,12 @@ public class EaseSchoolAuthenticationProvider implements AuthenticationProvider 
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 
-    public List<GrantedAuthority> getGrantedAuth(Roles role) {
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_"+role.getRoleName()));
-    return grantedAuthorities;
+    public List<GrantedAuthority> getGrantedAuthorities(Roles roles) {
+
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+roles.getRoleName()));
+        return authorities;
     }
+
 }
+
